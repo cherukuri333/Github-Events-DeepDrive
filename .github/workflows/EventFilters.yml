@@ -1,6 +1,13 @@
-name: Events-Demo-1
-on: 
+name: EventsFilters
+on:
+   push:
+     branches:
+       - main
+       - dev
    pull_request:
+     branches:
+       - main
+       - dev
      types:
        - closed
        - opened
