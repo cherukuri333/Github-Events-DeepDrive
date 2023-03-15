@@ -1,18 +1,22 @@
-# name of the workfolw
-name: first-workflow
-# Controls when the workflow will run
-# Allows you to run this workflow manually from the Actions tab
-on: workflow_dispatch
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+name: Events-Demo-1
+on: 
+   pull_request:
+     types:
+	   - opened
+   workflow_dispatch
 jobs:
-# This workflow contains a single job called "first-job"
-  first-job:
-# The type of runner that the job will run on
+  test-bulid-job:
     runs-on: ubuntu-latest
-# Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: step1-helloMessage
-# Runs a single command using the runners shell
-        run: echo Hello, world!
-      - name: step2-byeMessage
-        run: echo bye, for now!
+      - name: Output Github-Event
+        run: echo "${{ toJSON(github.event)}}"
+      - name: Downloading Code-step-1
+        uses: actions/checkout@v3
+      - name: Install NodeJS-step-2
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Install Dependencies-step-3
+        run: npm ci
+      - name: build project-step-4
+        run: npm run build
